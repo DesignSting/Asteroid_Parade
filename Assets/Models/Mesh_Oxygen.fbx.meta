@@ -3,7 +3,12 @@ guid: 8436b597a2b64cb458f1ca5515824ec3
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Txt_oxygen
+    second: {fileID: 2100000, guid: f88cdfedada3c28409aa11b73a242ef5, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
