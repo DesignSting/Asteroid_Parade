@@ -79,6 +79,7 @@ public class CameraController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        JustTeleported();
+        if(other.tag == "Player")
+            JustTeleported();
     }
 }

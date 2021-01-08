@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody thisRigidbody;
 
     private Vector3 mousePos;
+    public bool tooClose;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +26,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (!tooClose)
         {
-            GameObject bulletCopy = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);
-            bulletCopy.transform.LookAt(mousePos);
-            bulletCopy.GetComponentInChildren<BulletProjectile>().Shoot(mousePos);
+            if (Input.GetMouseButtonDown(0))
+            {
+                GameObject bulletCopy = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);
+                bulletCopy.transform.LookAt(mousePos);
+                bulletCopy.GetComponentInChildren<BulletProjectile>().Shoot(mousePos);
+            }
         }
     }
 

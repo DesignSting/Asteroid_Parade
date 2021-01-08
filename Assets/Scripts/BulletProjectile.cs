@@ -23,9 +23,9 @@ public class BulletProjectile : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        if(timer >lifeSpan)
+        if(timer > lifeSpan)
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 }
