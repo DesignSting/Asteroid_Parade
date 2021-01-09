@@ -18,10 +18,16 @@ public class PlayerController : MonoBehaviour
     private Vector3 mousePos;
     public bool tooClose;
 
+    private float topThird;
+    private float bottomThird;
+
     // Start is called before the first frame update
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
+        float screenSize = Screen.height;
+        topThird = screenSize - (screenSize / 3);
+        bottomThird = screenSize / 3;
     }
 
     private void Update()
@@ -34,6 +40,11 @@ public class PlayerController : MonoBehaviour
                 bulletCopy.transform.LookAt(mousePos);
                 bulletCopy.GetComponentInChildren<BulletProjectile>().Shoot(mousePos);
             }
+        }
+
+        if (transform.position.z != 0)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         }
     }
 
@@ -64,6 +75,5 @@ public class PlayerController : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y, transform.position.z);
         Debug.DrawLine(transform.position, mousePos);
-        crosshair.transform.LookAt(mousePos);
     }
 }

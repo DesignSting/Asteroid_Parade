@@ -28,4 +28,13 @@ public class BulletProjectile : MonoBehaviour
             Destroy(gameObject.transform.parent.gameObject);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Asteroid")
+        {
+            other.GetComponent<AsteroidInfo>().Hit();
+            Destroy(transform.parent.gameObject);
+        }
+    }
 }

@@ -14,7 +14,13 @@ public class GameManager : MonoBehaviour
 
     public List<Transform> destinationTransforms = new List<Transform>();
 
-    public void SpawnAsteroid()
+    private float timer;
+    private float timerDuration = 15f;
+
+    private float oxygenSpawnTimer;
+    private float oxygenSpawnDuration = 3f;
+
+    public void SpawnObject(bool isAsteroid)
     {
         int spawnPos = Random.Range(0, 4);
         BoxCollider spawnCollider = null;
@@ -44,10 +50,50 @@ public class GameManager : MonoBehaviour
         Vector3 spawnVector = spawnCollider.transform.position;
 
         spawnVector = new Vector3(spawnVector.x + xRand, spawnVector.y + yRand, 0);
-        GameObject newAsteroid = Instantiate(asteroidPrefab, spawnVector, Quaternion.identity);
-
         int destination = Random.Range(0, destinationTransforms.Count);
 
-        newAsteroid.GetComponent<Asteroid>().StartMoving(destinationTransforms[destination]);
+        if (isAsteroid)
+        {
+            GameObject newAsteroid = Instantiate(asteroidPrefab, spawnVector, Quaternion.identity);
+            newAsteroid.GetComponent<Asteroid>().CreateGeneralAsteroid(destinationTransforms[destination]);
+        }
+        else
+        {
+            GameObject newOxygen = Instantiate(oxygenPrefab, spawnVector, Quaternion.identity);
+            newOxygen.GetComponentInChildren<OxygenContainer>().CreateOxygenContainer(destinationTransforms[destination]);
+        }
+    }
+
+    public void SpawnAsteroid(Vector3 position, Vector3 direction, AsteroidSize asteroidSize)
+    {
+        GameObject newAsteroid = Instantiate(asteroidPrefab, position, Quaternion.identity);
+        newAsteroid.GetComponent<Asteroid>().CreateSpecificAsteroid(direction, asteroidSize);
+    }
+
+    private void Start()
+    {
+        //SpawnObject(true);
+        //SpawnObject(true);
+        //SpawnObject(true);
+        //SpawnObject(true);
+        //SpawnObject(true);
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        oxygenSpawnTimer += Time.deltaTime;
+        if(timer > timerDuration)
+        {
+            SpawnObject(true);
+            timer = 0;
+            timerDuration -= 0.05f;
+        }
+
+        if(oxygenSpawnTimer > oxygenSpawnDuration)
+        {
+            SpawnObject(false);
+            oxygenSpawnTimer = 0;
+        }
     }
 }
